@@ -1,6 +1,6 @@
 <?php
 // Includi la classe DBManager
-require_once 'DBManager.php';
+require_once '../util/DBManager.php';
 
 // Crea un'istanza di DBManager
 $db = new DBManager();
@@ -13,4 +13,4 @@ $desccrizione = $_POST['descrizione'];
 $db->create($user_id, $desccrizione);
 
 // Reindirizza l'utente alla pagina benvenuto.php
-header('Location: benvenuto.php');
+header('Location: ../pages/benvenuto.php');

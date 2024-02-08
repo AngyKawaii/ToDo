@@ -20,15 +20,15 @@
         public function create($id_user, $descrizione) {
             $sql = "INSERT INTO task  (`id`, `User_id`, `Descrizione`, `Data`, `Completato`) VALUES (NULL, ?, ?, 2024-02-23, 0)";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("is", $id_user, $descrizione); // usa il tipo di dato s per entrambi i parametri            
+            $stmt->bind_param("is", $id_user, $descrizione);       
             $stmt->execute();
             $stmt->close();
         }
     
-        public function update($id, $id_user, $descrizione) {
+        public function update($id, $descrizione) {
             $sql = "UPDATE task SET Descrizione = ? WHERE id = ?";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("ss", $descrizione, $id); // usa il tipo di dato s per entrambi i parametri
+            $stmt->bind_param("si", $descrizione, $id); 
             if ($stmt->execute()) { // controlla se la query ha avuto successo
                 echo "task aggiornata con successo";
             } else {

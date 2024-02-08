@@ -38,4 +38,4 @@ if ($conn->query($sql) === TRUE) {
 
 // Remember to close the connection when done
 $conn->close();
-header("Location: Index.html");
+header("Location: ../Index.html");
