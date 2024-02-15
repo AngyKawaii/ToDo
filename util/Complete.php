@@ -12,7 +12,6 @@ $taskId = $_POST['id'];
 $db->complete($taskId);
 
 
-
 // Reindirizza l'utente alla pagina benvenuto.php
 header('Location: ../pages/benvenuto.php');
 

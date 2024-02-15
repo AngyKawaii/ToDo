@@ -45,6 +45,14 @@
             $stmt->close();
         }
 
+        function notComplete($id) {
+            $sql = "UPDATE task SET Completato = 0 WHERE id = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $stmt->close();
+        }
+
     
         public function delete($id) {
             $sql = "DELETE FROM task WHERE id = ?";
