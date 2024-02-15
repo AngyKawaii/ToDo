@@ -53,7 +53,7 @@ $tasks = $db->getTasks($id);
                                             class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2">
                                             <div class="form-check">
                                                 <input class="form-check-input task-checkbox" type="checkbox"
-                                                    id="task_<?php echo $task['id']; ?>">
+                                                    id="task_<?php echo $task['id']; ?>" onchange="line(<?php echo $task['id']; ?>)">
                                                 <label class="form-check-label" for="task_<?php echo $task['id']; ?>">
                                                     <?php echo $task['Descrizione']; ?>
                                                 </label>
@@ -119,20 +119,24 @@ $tasks = $db->getTasks($id);
                         </div>
 
                         <script>
-                            document.addEventListener('DOMContentLoaded', function () {
-                                const checkboxes = document.querySelectorAll('.task-checkbox');
 
-                                checkboxes.forEach(function (checkbox) {
-                                    checkbox.addEventListener('change', function () {
-                                        const description = this.nextElementSibling; // Get the label next to the checkbox
-                                        if (this.checked) {
-                                            description.style.textDecoration = 'line-through';
-                                        } else {
-                                            description.style.textDecoration = 'none';
-                                        }
+                            function line(taskId) {
+                                var checkBox = document.getElementById('task_' + taskId);
+                                var description = document.getElementById('task_' + taskId).nextElementSibling;
+                                if (checkBox.checked == true) {
+                                    description.style.textDecoration = "line-through";
+                                    fetch('../util/Complete.php', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/x-www-form-urlencoded',
+                                        },
+                                        body: 'id=' + taskId
                                     });
-                                });
-                            });
+                                } else {
+                                    description.style.textDecoration = "none";
+                                }
+
+                            }
                         </script>
 
                         <script>
@@ -152,8 +156,6 @@ $tasks = $db->getTasks($id);
         </div>
         </div>
     </section>
-
-
 </body>
 
 </html>
