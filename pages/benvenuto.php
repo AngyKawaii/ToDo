@@ -73,7 +73,27 @@ $tasks = $db->getTasks($id);
                                         </div>
                                         <div class="modal fade" id="modal_<?php echo $task['id']; ?>" tabindex="-1"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <!-- Modal Content -->
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Modifica Task</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="../util/Update.php" method="post"
+                                                            class="list-group-item">
+                                                            <input type="text" class="form-control" name="descrizione"
+                                                                placeholder="Inserisci la tua descrizione"
+                                                                value="<?php echo $task['Descrizione']; ?>">
+                                                            <input type="hidden" name="id"
+                                                                value="<?php echo $task['id']; ?>">
+                                                            <input type="submit" class="btn btn-primary mt-2"
+                                                                value="Modifica">
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
@@ -97,23 +117,23 @@ $tasks = $db->getTasks($id);
 
                             <a href="../Index.html" class="mt-3">Logout</a>
                         </div>
-                        
-                        <script>
-                                document.addEventListener('DOMContentLoaded', function () {
-                                    const checkboxes = document.querySelectorAll('.task-checkbox');
 
-                                    checkboxes.forEach(function (checkbox) {
-                                        checkbox.addEventListener('change', function () {
-                                            const description = this.nextElementSibling; // Get the label next to the checkbox
-                                            if (this.checked) {
-                                                description.style.textDecoration = 'line-through';
-                                            } else {
-                                                description.style.textDecoration = 'none';
-                                            }
-                                        });
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                const checkboxes = document.querySelectorAll('.task-checkbox');
+
+                                checkboxes.forEach(function (checkbox) {
+                                    checkbox.addEventListener('change', function () {
+                                        const description = this.nextElementSibling; // Get the label next to the checkbox
+                                        if (this.checked) {
+                                            description.style.textDecoration = 'line-through';
+                                        } else {
+                                            description.style.textDecoration = 'none';
+                                        }
                                     });
                                 });
-                            </script>
+                            });
+                        </script>
 
                         <script>
                             function showModal(taskId) {
