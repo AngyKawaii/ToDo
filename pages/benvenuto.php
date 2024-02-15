@@ -134,6 +134,13 @@ $tasks = $db->getTasks($id);
                                     });
                                 } else {
                                     description.style.textDecoration = "none";
+                                    fetch('../util/Complete.php', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/x-www-form-urlencoded',
+                                        },
+                                        body: 'id=' + taskId
+                                    });
                                 }
 
                             }
