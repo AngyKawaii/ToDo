@@ -29,19 +29,7 @@ $tasks = $db->getTasks($id);
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <style>
-        .input-inline {
-            display: inline;
-        }
 
-        .p-inline {
-            display: inline;
-        }
-
-        .tasks {
-            margin: 20px;
-        }
-    </style>
 </head>
 
 <body>
@@ -61,12 +49,15 @@ $tasks = $db->getTasks($id);
                                     <h1 class="text-center my-3 pb-3">Tasks</h1>
 
                                     <?php foreach ($tasks as $task): ?>
-
-                                        <div class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2">
-
-                                            <p class="mb-2">
-                                                <?php echo $task['Descrizione']; ?>
-                                            </p>
+                                        <div
+                                            class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input task-checkbox" type="checkbox"
+                                                    id="task_<?php echo $task['id']; ?>">
+                                                <label class="form-check-label" for="task_<?php echo $task['id']; ?>">
+                                                    <?php echo $task['Descrizione']; ?>
+                                                </label>
+                                            </div>
                                             <div class="row justify-content-end">
                                                 <div class="col-4">
                                                     <button type="button" class="btn btn-primary"
@@ -80,68 +71,65 @@ $tasks = $db->getTasks($id);
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="modal fade" id="modal_<?php echo $task['id']; ?>" tabindex="-1"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Modifica Task</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form action="../util/Update.php" method="post"
-                                                            class="list-group-item">
-                                                            <input type="text" class="form-control" name="descrizione"
-                                                                placeholder="Inserisci la tua descrizione"
-                                                                value="<?php echo $task['Descrizione']; ?>">
-                                                            <input type="hidden" name="id"
-                                                                value="<?php echo $task['id']; ?>">
-                                                            <input type="submit" class="btn btn-primary mt-2"
-                                                                value="Modifica">
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <!-- Modal Content -->
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
+                            </div>
 
-                                <div class="pb-2">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="d-flex flex-row align-items-center">
+                            <div class="pb-2">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-row align-items-center">
 
-                                                <form action="../util/Create.php" method="post" class="form-label">
-                                                    <input type="text" class="form-control" name="descrizione"
-                                                        placeholder="Inserisci la tua descrizione">
-                                                    <input type="hidden" name="id" value="<?php echo $id; ?>">
-                                                    <input type="submit" class="btn btn-success mt-2" value="Aggiungi">
-                                                </form>
-                                            </div>
+                                            <form action="../util/Create.php" method="post" class="form-label">
+                                                <input type="text" class="form-control" name="descrizione"
+                                                    placeholder="Inserisci la tua descrizione">
+                                                <input type="hidden" name="id" value="<?php echo $id; ?>">
+                                                <input type="submit" class="btn btn-success mt-2" value="Aggiungi">
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
-
-                                <a href="../Index.html" class="mt-3">Logout</a>
                             </div>
 
-                            <script>
-                                function showModal(taskId) {
-                                    var modalId = 'modal_' + taskId;
-                                    var myModal = new bootstrap.Modal(document.getElementById(modalId));
-                                    myModal.show();
-                                }
-                            </script>
-                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-                                integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-                                crossorigin="anonymous"></script>
-
+                            <a href="../Index.html" class="mt-3">Logout</a>
                         </div>
+                        
+                        <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    const checkboxes = document.querySelectorAll('.task-checkbox');
+
+                                    checkboxes.forEach(function (checkbox) {
+                                        checkbox.addEventListener('change', function () {
+                                            const description = this.nextElementSibling; // Get the label next to the checkbox
+                                            if (this.checked) {
+                                                description.style.textDecoration = 'line-through';
+                                            } else {
+                                                description.style.textDecoration = 'none';
+                                            }
+                                        });
+                                    });
+                                });
+                            </script>
+
+                        <script>
+                            function showModal(taskId) {
+                                var modalId = 'modal_' + taskId;
+                                var myModal = new bootstrap.Modal(document.getElementById(modalId));
+                                myModal.show();
+                            }
+                        </script>
+                        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+                            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+                            crossorigin="anonymous"></script>
+
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </section>
 
