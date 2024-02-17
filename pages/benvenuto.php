@@ -51,26 +51,34 @@ $tasks = $db->getTasks($id);
                                     <?php foreach ($tasks as $task): ?>
                                         <div
                                             class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2">
-                                            <div class="form-check">
-                                                <input class="form-check-input task-checkbox" type="checkbox"
-                                                    id="task_<?php echo $task['id']; ?>" onchange="line(<?php echo $task['id']; ?>)">
-                                                <label class="form-check-label" for="task_<?php echo $task['id']; ?>">
-                                                    <?php echo $task['Descrizione']; ?>
-                                                </label>
-                                            </div>
-                                            <div class="row justify-content-end">
-                                                <div class="col-4">
-                                                    <button type="button" class="btn btn-primary"
-                                                        onclick="showModal(<?php echo $task['id']; ?>)">Update</button>
-                                                </div>
-                                                <div class="col-4">
-                                                    <form action="../util/Delete.php" method="post" class="input-inline">
-                                                        <input type="hidden" name="id" value="<?php echo $task['id']; ?>">
-                                                        <input type="submit" class="btn btn-danger" value="Delete">
-                                                    </form>
-                                                </div>
-                                            </div>
+                                            <div class="container text-center">
+                                                <div class="row align-items-start">
+                                                    <div class="col-3 p-2 mb-2">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input task-checkbox" type="checkbox"
+                                                                <?php if ($task['Completato'] == 1) echo 'checked'; ?>
+                                                                id="task_<?php echo $task['id']; ?>" onchange="line(<?php echo $task['id']; ?>)">
+                                                            <label class="form-check-label" for="task_<?php echo $task['id']; ?>"<?php if ($task['Completato'] == 1) echo 'style="text-decoration: line-through;"'; ?>>
+                                                                <?php echo $task['Descrizione']; ?>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-9 p-2">
+                                                        <div class="row justify-content-end">
+                                                            <div class="col-4">
+                                                                <button type="button" class="btn btn-primary"
+                                                                    onclick="showModal(<?php echo $task['id']; ?>)">Update</button>
+                                                            </div>
+                                                            <div class="col-4 ms-2">
+                                                                <form action="../util/Delete.php" method="post" class="input-inline">
+                                                                    <input type="hidden" name="id" value="<?php echo $task['id']; ?>">
+                                                                    <input type="submit" class="btn btn-danger" value="Delete">
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                         </div>
+                                            </div>
                                         <div class="modal fade" id="modal_<?php echo $task['id']; ?>" tabindex="-1"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
@@ -134,7 +142,7 @@ $tasks = $db->getTasks($id);
                                     });
                                 } else {
                                     description.style.textDecoration = "none";
-                                    fetch('../util/Complete.php', {
+                                    fetch('../util/NotComplete.php', {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/x-www-form-urlencoded',
