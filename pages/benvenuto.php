@@ -29,7 +29,7 @@ $tasks = $db->getTasks($id);
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-
+    
 </head>
 
 <body>
@@ -50,7 +50,8 @@ $tasks = $db->getTasks($id);
 
                                     <?php foreach ($tasks as $task): ?>
                                         <div
-                                            class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2">
+                                            class="justify-content-center align-items-center mb-4">
+                                            
                                             <div class="container text-center">
                                                 <div class="row align-items-start">
                                                     <div class="col-3 p-2 mb-2">
@@ -64,16 +65,23 @@ $tasks = $db->getTasks($id);
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-9 p-2">
-                                                        <div class="row justify-content-end">
+                                                        <div class="row row-cols-3">
                                                             <div class="col-4">
-                                                                <button type="button" class="btn btn-primary"
+                                                            <?php if (strtotime($task['Data']) < time() && $task['Completato'] != 1): ?>
+                                                                <p class="text-center"><?php echo $task['Data']; ?> <span class="badge bg-danger">In ritardo</span></p>
+                                                            <?php else: ?>
+                                                                <p class="text-center"><?php echo $task['Data']; ?></p>
+                                                            <?php endif; ?>     
+                                                            </div>                                                     
+                                                              <div class="col-md-4 offset-md-4">
+                                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                                <button type="button" class="btn btn-primary rounded-3"
                                                                     onclick="showModal(<?php echo $task['id']; ?>)">Update</button>
-                                                            </div>
-                                                            <div class="col-4 ms-2">
                                                                 <form action="../util/Delete.php" method="post" class="input-inline">
                                                                     <input type="hidden" name="id" value="<?php echo $task['id']; ?>">
                                                                     <input type="submit" class="btn btn-danger" value="Delete">
                                                                 </form>
+                                                            </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -94,6 +102,8 @@ $tasks = $db->getTasks($id);
                                                             <input type="text" class="form-control" name="descrizione"
                                                                 placeholder="Inserisci la tua descrizione"
                                                                 value="<?php echo $task['Descrizione']; ?>">
+                                                            <input type="date" class="form-control" name="data"
+                                                                value="<?php echo $task['Data']; ?>">
                                                             <input type="hidden" name="id"
                                                                 value="<?php echo $task['id']; ?>">
                                                             <input type="submit" class="btn btn-primary mt-2"
@@ -112,12 +122,19 @@ $tasks = $db->getTasks($id);
                                     <div class="card-body">
                                         <div class="d-flex flex-row align-items-center">
 
-                                            <form action="../util/Create.php" method="post" class="form-label">
+                                            <form action="../util/Create.php" method="post" class="row g-3">
+                                                <div class="col-auto">
                                                 <input type="text" class="form-control" name="descrizione"
                                                     placeholder="Inserisci la tua descrizione">
+                                                </div>
+                                                <div class="col-auto">
                                                 <input type="date" class="form-control" name="data">
+                                                </div>
                                                 <input type="hidden" name="id" value="<?php echo $id; ?>">
-                                                <input type="submit" class="btn btn-success mt-2" value="Aggiungi">
+                                                <div class="col-auto">
+                                                <input type="submit" class="btn btn-success" value="Aggiungi">
+                                                </div>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>

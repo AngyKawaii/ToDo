@@ -17,18 +17,18 @@
             }
         }
     
-        public function create($id_user, $descrizione) {
-            $sql = "INSERT INTO task  (`id`, `User_id`, `Descrizione`, `Data`, `Completato`) VALUES (NULL, ?, ?, 2024-02-23, 0)";
+        public function create($id_user, $descrizione, $date) {
+            $sql = "INSERT INTO task  (`id`, `User_id`, `Descrizione`, `Data`, `Completato`) VALUES (NULL, ?, ?, ?, 0)";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("is", $id_user, $descrizione);       
+            $stmt->bind_param("iss", $id_user, $descrizione, $date);       
             $stmt->execute();
             $stmt->close();
         }
     
-        public function update($id, $descrizione) {
-            $sql = "UPDATE task SET Descrizione = ? WHERE id = ?";
+        public function update($id, $descrizione, $date) {
+            $sql = "UPDATE task SET Descrizione = ? , Data = ? WHERE id = ?";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("si", $descrizione, $id); 
+            $stmt->bind_param("ssi", $descrizione, $date , $id); 
             if ($stmt->execute()) { // controlla se la query ha avuto successo
                 echo "task aggiornata con successo";
             } else {
