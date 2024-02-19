@@ -1,7 +1,7 @@
 <?php   
     class DBManager {
         private $conn;
-    
+
         public function __construct() {
             $servername = "localhost";
             $username = "root";
@@ -83,6 +83,8 @@
         public function __destruct() {
             $this->conn->close();
         }
+
+        public function Connect() {
+            return $this->conn;
+        }
     }
-    
-?>

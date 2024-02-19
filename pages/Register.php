@@ -4,22 +4,13 @@ if (!(isset($_POST['user']) && isset($_POST['password']) && isset($_POST['email'
     header("Location: Register.html");
 }
 
-$servername = "localhost"; 
-$username = "root";
-$password = ""; 
-$dbname = "todo";
+// Includi la classe DBManager
+require_once '../util/DBManager.php';
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Crea un'istanza di DBManager
+$db = new DBManager();
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-echo "Connected successfully";
-// You can perform your database operations here...
-
+$conn = $db->Connect();
 
 // Sample data
 $userName = $_POST['user'];

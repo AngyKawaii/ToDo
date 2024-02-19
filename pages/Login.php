@@ -4,22 +4,25 @@ se la password e username sono corretti reindirizza a benvenuto.html altrimenti
 reindirizza index.html
 
 
+
 */
+
 session_start();
+
+require_once '../util/DBManager.php';
+
+$db = new DBManager();
+
+
 
 //print_r(($_GET));
 
 
 if (isset($_POST['user']) && isset($_POST['password'])) {
 
-    $servername = "localhost"; // Change this if your database is hosted elsewhere
-    $username = "root";
-    $password = ""; // If your root user has a password, set it here
-    $dbname = "todo";
 
     // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
+    $conn = $db->Connect();
     // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
@@ -56,6 +59,6 @@ if (isset($_POST['user']) && isset($_POST['password'])) {
     
         header("Location: benvenuto.php");
     } else {
-        header("Location: index.html");
+        header("Location: ../Index.html");
     }
-} else  header("Location: index.html");
+} else  header("Location: ../Index.html");

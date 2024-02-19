@@ -115,6 +115,7 @@ $tasks = $db->getTasks($id);
                                             <form action="../util/Create.php" method="post" class="form-label">
                                                 <input type="text" class="form-control" name="descrizione"
                                                     placeholder="Inserisci la tua descrizione">
+                                                <input type="date" class="form-control" name="data">
                                                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                                                 <input type="submit" class="btn btn-success mt-2" value="Aggiungi">
                                             </form>
