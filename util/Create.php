@@ -1,4 +1,7 @@
 <?php
+if($_POST['descrizione'] != "" && strtotime($task['Data']) >= time()){
+    
+
 // Includi la classe DBManager
 require_once '../util/DBManager.php';
 
@@ -15,3 +18,6 @@ $db->create($user_id, $desccrizione, $date);
 
 // Reindirizza l'utente alla pagina benvenuto.php
 header('Location: ../pages/benvenuto.php');
+}else{
+    header("Location: ../pages/benvenuto.php");
+}
