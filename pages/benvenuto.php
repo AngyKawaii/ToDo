@@ -40,20 +40,20 @@ $tasks = $db->getTasks($id);
                         <h1 class="text-center">
                             <?= $string; ?>
                         </h1>
-
                         <div class="container">
                             <div class="tasks">
                                 <h1 class="text-center my-3 pb-3">Tasks</h1>
-
+                                <!-- Lista delle task -->
                                 <?php foreach ($tasks as $task): ?>
                                     <div class="justify-content-center align-items-center mb-4">
                                         <div class="container text-center">
                                             <div class="row align-items-start">
                                                 <div class="col-3 p-2 mb-2">
                                                     <div class="form-check">
+                                                        <!-- Controllo se la task è già stata completata o meno, se è completata spunto già il checkbox altrimenti no -->
                                                         <input class="form-check-input task-checkbox" type="checkbox"
-                                                        <?php if ($task['Completato'] == 1) echo 'checked'; ?>
-                                                        id="task_<?php echo $task['id']; ?>" onchange="line(<?php echo $task['id']; ?>)">
+                                                        <?php if ($task['Completato'] == 1) echo 'checked'; ?> 
+                                                        id="task_<?php echo $task['id']; ?>" onchange="line(<?php echo $task['id']; ?>)"> 
                                                         <label class="form-check-label" for="task_<?php echo $task['id']; ?>"<?php if ($task['Completato'] == 1) echo 'style="text-decoration: line-through;"'; ?>>
                                                             <?php echo $task['Descrizione']; ?>
                                                         </label>
@@ -62,6 +62,7 @@ $tasks = $db->getTasks($id);
                                                 <div class="col-sm-9 p-2">
                                                     <div class="row row-cols-3">
                                                         <div class="col-4">
+                                                            <!-- Controllo se la task è in ritardo o meno -->
                                                             <?php if (strtotime($task['Data']) < time() && $task['Completato'] != 1): ?>
                                                                 <p class="text-center"><?php echo $task['Data']; ?> <span class="badge bg-danger">In ritardo</span></p>
                                                             <?php else: ?>
@@ -70,8 +71,10 @@ $tasks = $db->getTasks($id);
                                                         </div>                                                     
                                                         <div class="col-md-4 offset-md-4">
                                                             <div class="btn-group" role="group" aria-label="Basic example">
+                                                                <!-- Bottone per aprire il modal per modificare la task -->
                                                                 <button type="button" class="btn btn-primary rounded-3"
                                                                     onclick="showModal(<?php echo $task['id']; ?>)">Update</button>
+                                                                <!-- Bottone per eliminare la task -->
                                                                 <form action="../util/Delete.php" method="post" class="input-inline">
                                                                     <input type="hidden" name="id" value="<?php echo $task['id']; ?>">
                                                                     <input type="submit" class="btn btn-danger" value="Delete">
@@ -83,6 +86,7 @@ $tasks = $db->getTasks($id);
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- Modal per modificare la task -->
                                     <div class="modal fade" id="modal_<?php echo $task['id']; ?>" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -112,7 +116,7 @@ $tasks = $db->getTasks($id);
                                 <?php endforeach; ?>
                             </div>
                         </div>
-
+                        <!-- Form per aggiungere una nuova task -->
                         <div class="pb-2">
                             <div class="card" style="background-color: rgba(255, 255, 255, 0.1); ">
                                 <div class="card-body">
@@ -141,6 +145,7 @@ $tasks = $db->getTasks($id);
         </div>
     </div>
     <script>
+        //Funzione per aggiungere una line-through al testo della task quando viene completata e aggiorna il database
         function line(taskId) {
             var checkBox = document.getElementById('task_' + taskId);
             var description = document.getElementById('task_' + taskId).nextElementSibling;
@@ -168,6 +173,7 @@ $tasks = $db->getTasks($id);
     </script>
 
     <script>
+        //Funzione per mostrare il modal per modificare la task
         function showModal(taskId) {
             var modalId = 'modal_' + taskId;
             var myModal = new bootstrap.Modal(document.getElementById(modalId));

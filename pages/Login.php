@@ -2,9 +2,6 @@
 /*
 se la password e username sono corretti reindirizza a benvenuto.html altrimenti
 reindirizza index.html
-
-
-
 */
 
 session_start();
@@ -13,13 +10,7 @@ require_once '../util/DBManager.php';
 
 $db = new DBManager();
 
-
-
-//print_r(($_GET));
-
-
 if (isset($_POST['user']) && isset($_POST['password'])) {
-
 
     // Create connection
     $conn = $db->Connect();
@@ -29,8 +20,6 @@ if (isset($_POST['user']) && isset($_POST['password'])) {
     }
 
     echo "Connected successfully";
-    // You can perform your database operations here...
-
 
     // SQL query to select data from the table
     $sql = "SELECT id, User, Password FROM users";
