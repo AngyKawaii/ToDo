@@ -1,5 +1,5 @@
 <?php
-if($_POST['descrizione'] != "" && strtotime($task['Data']) >= time()){
+if($_POST['descrizione'] != "" && strtotime($_POST['data']) >= time()){
     
 
 // Includi la classe DBManager
