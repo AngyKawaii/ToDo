@@ -89,6 +89,7 @@ $tasks = $db->getTasks($id);
                                     <!-- Modal per modificare la task -->
                                     <div class="modal fade" id="modal_<?php echo $task['id']; ?>" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <!--Header del modal -->
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -96,6 +97,7 @@ $tasks = $db->getTasks($id);
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
+                                                <!--Body del modal con input e submit-->
                                                 <div class="modal-body">
                                                     <form action="../util/Update.php" method="post"
                                                         class="list-group-item">
@@ -122,14 +124,17 @@ $tasks = $db->getTasks($id);
                                 <div class="card-body">
                                     <div class="d-flex flex-row align-items-center">
                                         <form action="../util/Create.php" method="post" class="row g-3">
+                                            <!-- Input per la descrizione della task -->
                                             <div class="col-auto">
                                                 <input type="text" class="form-control" name="descrizione"
                                                     placeholder="Inserisci la tua descrizione" style="background-color: rgba(255, 255, 255, 0.1); ">
                                             </div>
+                                            <!-- Input per la data della task -->
                                             <div class="col-auto">
                                                 <input type="date" class="form-control" name="data" style="background-color: rgba(255, 255, 255, 0.1); ">
                                             </div>
                                             <input type="hidden" name="id" value="<?php echo $id; ?>">
+                                            <!-- Bottone per aggiungere la task -->
                                             <div class="col-auto">
                                                 <input type="submit" class="btn btn-success" value="Aggiungi">
                                             </div>
@@ -151,10 +156,10 @@ $tasks = $db->getTasks($id);
             var description = document.getElementById('task_' + taskId).nextElementSibling;
             if (checkBox.checked == true) {
                 description.style.textDecoration = "line-through";
-                fetch('../util/Complete.php', {
+                fetch('../util/Complete.php', { 
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Content-Type': 'application/x-www-form-urlencoded', //Header per specificare il tipo di contenuto
                     },
                     body: 'id=' + taskId
                 });
@@ -176,8 +181,8 @@ $tasks = $db->getTasks($id);
         //Funzione per mostrare il modal per modificare la task
         function showModal(taskId) {
             var modalId = 'modal_' + taskId;
-            var myModal = new bootstrap.Modal(document.getElementById(modalId));
-            myModal.show();
+            var myModal = new bootstrap.Modal(document.getElementById(modalId)); //Crea un'istanza di Modal
+            myModal.show(); //Mostra il modal
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
